@@ -225,11 +225,26 @@ However for the challenging images, the model did not perform well at all. The r
 #### 3. Describe how certain the model is when predicting on each of the five new images by looking at the softmax probabilities for each prediction. Provide the top 5 softmax probabilities for each image along with the sign type of each probability. (OPTIONAL: as described in the "Stand Out Suggestions" part of the rubric, visualizations can also be provided such as bar charts)
 
 A visulaization of the top 5 softmax probabilities of the predicted images is shown below:
-![alttext][testDataProbabilities]
 
 ![alttext][testDataBars]
 
-For the second image ... 
+Another image showing the detailed probabilities and a corresponding random image from the training data for each softmax output.
+
+![alttext][testDataProbabilities]
+
+The same is shown for the challenging images
+![alttext][challengeDataBars]
+
+And again the detailed probabilities
+![alttext][challengeDataProbabilities]
+
+To further discuss what happened for the challenging data, we can analyze the results. 
+
+For the first image, the model predicted <strong>No passing for vehicles over 3.5 metric tons</strong> instead of <strong>Vehicles over 3.5 metric tons prohibited</strong>, however if we had a look on the two images, they are mostly similar in features, and that's why the model was confused and gave a wrong output.
+
+If we check the second image, we will see that the shape of the man doing the roadwork, is close to the shape of the deer in terms of angle somehow, so the model again was confused between the two images and predicted <strong>Wild animals</strong> crossing instead of <strong>Road work</strong>.
+
+As for the third image, the structure of the <em>3</em> and the <em>8</em> are similar also in terms of 2 circles above each other, while in the <em>3</em> is not complete circles, so again the model is confused between the  <em>3</em> and the <em>8</em> and thus predicted <strong>Speed limit (30km/h)</strong> instead of <strong>Speed limit (80km/h)</strong>.
 
 ### (Optional) Visualizing the Neural Network (See Step 4 of the Ipython notebook for more details)
 #### 1. Discuss the visual output of your trained network's feature maps. What characteristics did the neural network use to make classifications?
