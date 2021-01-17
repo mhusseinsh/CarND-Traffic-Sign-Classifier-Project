@@ -175,7 +175,7 @@ If an iterative approach was chosen:
     :-------------------------:|:-------------------------:|:-------------------------:
     ![alt text][model1] | ![alt text][model2] | ![alt text][model3]
 
-* What are some of the important design choices and why were they chosen? For example, why might a convolution layer work well with this problem? How might a dropout layer help with creating a successful model?
+* <strong>What are some of the important design choices and why were they chosen? For example, why might a convolution layer work well with this problem? How might a dropout layer help with creating a successful model?</strong>
   
     Deep learning neural networks are likely to quickly overfit a training dataset with few examples.
 
