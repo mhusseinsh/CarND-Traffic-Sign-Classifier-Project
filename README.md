@@ -226,6 +226,7 @@ However for the challenging images, the model did not perform well at all. The r
 
 A visulaization of the top 5 softmax probabilities of the predicted images is shown below:
 ![alttext][testDataProbabilities]
+
 ![alttext][testDataBars]
 
 For the second image ... 
