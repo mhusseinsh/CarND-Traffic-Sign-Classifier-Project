@@ -16,6 +16,7 @@ The goals / steps of this project are the following:
 
 
 [//]: # (Image References)
+[lenet]: ./images/lenet.jpeg "Le Net"
 [allSigns]: ./images/allSigns.png "All Signs"
 [trainDistribution]: ./images/trainDistribution.png "Train Set Distribution"
 [testDistribution]: ./images/testDistribution.png "Test Set Distribution"
@@ -30,6 +31,9 @@ The goals / steps of this project are the following:
 [challengeData]: ./images/challengeData.png "Challenging Data"
 [challengeDataProbabilities]: ./images/challengeDataProbabilities.png "Challenging DataProbabilities"
 [challengeDataBars]: ./images/challengeDataBars.png "Challenging Data Bars"
+[testImage]: ./testData/38.jpeg "Test Image"
+[conv1Activation]: ./images/conv1Activation.png "conv1 activation"
+[conv2Activation]: ./images/conv2Activation.png "conv2 activation"
 
 ## Rubric Points
 ### Here I will consider the [rubric points](https://review.udacity.com/#!/rubrics/481/view) individually and describe how I addressed each point in my implementation.  
@@ -87,6 +91,8 @@ A visualization of a sample image before and after preprocessing is shown below:
 #### 2. Describe what your final model architecture looks like including model type, layers, layer sizes, connectivity, etc.) Consider including a diagram and/or table describing the final model.
 
 My final model architecture is based on the original [LeNet model architecture](https://www.researchgate.net/figure/Architecture-of-LeNet-5-a-Convolutional-Neural-Network-here-for-digits-recognition_fig1_2985446) which consists of 2 convolutional layers followed by RELU activation function and max pooling layer, then 3 fully connected layer and a softmax output of 10 classes in the end.
+
+![alttext][lenet]
 
 I modified the architecture by adding 3 dropout layers after the fully connected layers to avoid overfitting, as well as changing the output of the last layer to 43 classes instead of 10 based on the size of the labels available in the dataset I am using.
 
@@ -191,7 +197,7 @@ If an iterative approach was chosen:
 
 #### 1. Choose five German traffic signs found on the web and provide them in the report. For each image, discuss what quality or qualities might be difficult to classify.
 
-Here are 5 German traffic signs that I found on the web:
+Here are 6 German traffic signs that I found on the web:
 
 ![alt text][testData]
 
@@ -206,19 +212,19 @@ Here are the results of the prediction:
 | Image			        |     Prediction	        					| 
 |:---------------------:|:---------------------------------------------:| 
 | Go straight or right      		| Go straight or right   									| 
-| Right of way at the next intersection     			| Right of way at the next intersection 										|
+| Right of way at the next intersection  | Right of way at the next intersection |
+No passing for vehicles over 3.5 metric tons| No passing for vehicles over 3.5 metric tons| 
 | Keep right					| Keep right											|
 | Slippery road	      		| Slippery road					 				|
 | Roundabout mandatory			| Roundabout mandatory      							|
 
 
-The model was able to correctly guess 5 of the 5 traffic signs, which gives an accuracy of 100%. This compares favorably to the accuracy on the test set of 95.04% which i got from the model.
+The model was able to correctly guess 6 of the 6 traffic signs, which gives an accuracy of 100%. This compares favorably to the accuracy on the test set of 95.04% which i got from the model.
 
 However for the challenging images, the model did not perform well at all. The results as below:
 
 | Image	 |  Prediction	 | 
 |:---------------------:|:---------------------------------------------:| 
-| Vehicles over 3.5 metric tons prohibited| No passing for vehicles over 3.5 metric tons| 
 | Road work | Wild animals crossing |
 | Speed limit (30km/h) | Speed limit (80km/h) |
 
@@ -238,15 +244,37 @@ The same is shown for the challenging images
 And again the detailed probabilities
 ![alttext][challengeDataProbabilities]
 
-To further discuss what happened for the challenging data, we can analyze the results. 
+To further discuss what happened for the challenging data, we can analyze the results.
 
-For the first image, the model predicted <strong>No passing for vehicles over 3.5 metric tons</strong> instead of <strong>Vehicles over 3.5 metric tons prohibited</strong>, however if we had a look on the two images, they are mostly similar in features, and that's why the model was confused and gave a wrong output.
-
-If we check the second image, we will see that the shape of the man doing the roadwork, is close to the shape of the deer in terms of angle somehow, so the model again was confused between the two images and predicted <strong>Wild animals</strong> crossing instead of <strong>Road work</strong>.
+For the first image, we will see that the shape of the man doing the roadwork, is close to the shape of the deer in terms of angle somehow, so the model again was confused between the two images and predicted <strong>Wild animals</strong> crossing instead of <strong>Road work</strong>, but we can also see that the second top probability is the correct one which is <strong>Road work</strong>.
 
 As for the third image, the structure of the <em>3</em> and the <em>8</em> are similar also in terms of 2 circles above each other, while in the <em>3</em> is not complete circles, so again the model is confused between the  <em>3</em> and the <em>8</em> and thus predicted <strong>Speed limit (30km/h)</strong> instead of <strong>Speed limit (80km/h)</strong>.
 
 ### (Optional) Visualizing the Neural Network (See Step 4 of the Ipython notebook for more details)
 #### 1. Discuss the visual output of your trained network's feature maps. What characteristics did the neural network use to make classifications?
 
+Now it is time to visualize the output of our activation layers of the network.
 
+Below is an image take from the new downloaded test data that I tested my model on
+![alttext][testImage]
+
+If we check the output of the first convolutional layer
+
+![alttext][conv1Activation]
+
+It is clear that the feature maps of the first activation seem to to try to learn the various edges and rounds of keep right sign image.
+
+While having a look on the second layer
+
+![alttext][conv2Activation]
+It is difficult to understand what the convolutional layer is trying to extract exactly, but it anyways more deep information that I cannot draw a conclusion from.
+
+### Discussion
+
+It is worth mentioning that the model can be better improved to be more robust and can be able to detect with better accuracy. We have seen the two challenging images, the model failed to detect, and also if we use more test images from the internet, the model may fail as well. 
+
+Additional investigation of improving the architecture could have be done, as well as trying to generate more data by performing data augmentation techniques which can include rotation, translation, zoom, flips, inserting jitter, and/or color perturbation.
+
+Due to the lack of time and computational resources, I was not able to do the whole exploration and trying different things out.
+
+Overall the goal of the project is reached and the model outputs a test accuracy greater than 93% with a good performing on new images aquired from the internet.
