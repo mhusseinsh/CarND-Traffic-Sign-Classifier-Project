@@ -21,6 +21,15 @@ The goals / steps of this project are the following:
 [testDistribution]: ./images/testDistribution.png "Test Set Distribution"
 [validDistribution]: ./images/validDistribution.png "Valid Set Distribution"
 [preProcess]: ./images/preprocess.png "Preprocessing"
+[model1]: ./images/model1.png "Model 1"
+[model2]: ./images/model2.png "Model 2"
+[model3]: ./images/model3.png "Model 3"
+[testData]: ./images/testData.png "Test Data"
+[testDataProbabilities]: ./images/testDataProbabilities.png "Test Data Probabilities"
+[testDataBars]: ./images/testDataBars.png "Test Data Bars"
+[challengeData]: ./images/challengeData.png "Challenging Data"
+[challengeDataProbabilities]: ./images/challengeDataProbabilities.png "Challenging DataProbabilities"
+[challengeDataBars]: ./images/challengeDataBars.png "Challenging Data Bars"
 
 ## Rubric Points
 ### Here I will consider the [rubric points](https://review.udacity.com/#!/rubrics/481/view) individually and describe how I addressed each point in my implementation.  
@@ -108,17 +117,18 @@ I modified the architecture by adding 3 dropout layers after the fully connected
 To train the model, [Adam Optimizer](https://arxiv.org/abs/1412.6980) was used as the optimization method for the training operation to minimize the training loss where the [Cross-Entropy](https://ml-cheatsheet.readthedocs.io/en/latest/loss_functions.html#cross-entropy) function was used as the network's loss function.
 
 My final hyperparameters were:
-* <strong>Epochs</strong>: 15
+* <strong>Epochs</strong>: 20
 * <strong>Batch Size</strong>: 16 
-* <strong>Learning Rate</strong>: 0.0009 
-* <strong>Dropout Probability</strong>: 0.7
+* <strong>Learning Rate</strong>: 0.001 
+* <strong>Dropout Probability</strong>: 0.6
 In addition to initializing the model variables by using truncated normal distribution with mu = 0.0 and sigma = 0.1.
 
 The model produced final accuracies as follows:
-* <strong>Training Accuracy</strong>: 99.5%
-* <strong>Validation Accuracy</strong>: 95.9%
-* <strong>Test Accuracy</strong>: 94.89%
+* <strong>Training Accuracy</strong>: 94.98%
+* <strong>Validation Accuracy</strong>: 99.2%
+* <strong>Test Accuracy</strong>: 95.04%
 
+![alt text][model1]
 
 #### 4. Describe the approach taken for finding a solution and getting the validation set accuracy to be at least 0.93. Include in the discussion the results on the training, validation and test sets and where in the code these were calculated. Your approach may have been an iterative process, in which case, outline the steps you took to get to the final solution and why you chose those steps. Perhaps your solution involved an already well known implementation or architecture. In this case, discuss why you think the architecture is suitable for the current problem.
 
@@ -149,11 +159,21 @@ If an iterative approach was chosen:
 
     During each training, the training and validation accuracies were calculated and logged, and after the training ends, the test accuracy is computed, and the model with the highest test accuracy was considered to be the best performing model.
 
-    Below are the results of the top 3 models:
+    Since I covered most of <em>batch_size, learning_rate, and dropout</em> for 15 and 20 epochs, and I did not find a major increase in the results for the same hyperparameters in both 15 and 20 epochs, so I stopped searching, since increasing more epochs won't affect the results that much
 
-    | Layer |Description| 
-|:-------------------------:|:---------------------------------------------:| 
-| Input         	    	| 32x32x1 Grayscale image   					|
+    Below are the results of the top 3 models sorted by test accuracy:
+
+    
+    | Epochs        | Batch Size    | Learning Rate    | Dropout Probability    | Training Accuracy    | Validation Accuracy    | Test Accuracy    |
+    |:-------------:|:-------------:|:-------------:| :-------------:| :-------------:| :-------------:| :-------------:|
+    | 20 | 16 | 0.001 | 0.6 | 99.2% | 95.8% |95.04% |
+    | 15 | 16 | 0.0009 | 0.7 | 99.47% | 95.85% |94.89% |
+    | 20 | 16 | 0.0009 | 0.6 | 99.35% | 96.82% |94.7% |
+
+
+    Model 1             |  Model 2 |  Model 3
+    :-------------------------:|:-------------------------:|:-------------------------:
+    ![alt text][model1] | ![alt text][model2] | ![alt text][model3]
 
 * What are some of the important design choices and why were they chosen? For example, why might a convolution layer work well with this problem? How might a dropout layer help with creating a successful model?
 * 
@@ -171,12 +191,13 @@ If an iterative approach was chosen:
 
 #### 1. Choose five German traffic signs found on the web and provide them in the report. For each image, discuss what quality or qualities might be difficult to classify.
 
-Here are five German traffic signs that I found on the web:
+Here are 5 German traffic signs that I found on the web:
 
-![alt text][image4] ![alt text][image5] ![alt text][image6] 
-![alt text][image7] ![alt text][image8]
+![alt text][testData]
 
-The first image might be difficult to classify because ...
+Also I included some challenging images which I will explain later why they were challenging
+
+![alt text][challengeData]
 
 #### 2. Discuss the model's predictions on these new traffic signs and compare the results to predicting on the test set. At a minimum, discuss what the predictions were, the accuracy on these new predictions, and compare the accuracy to the accuracy on the test set (OPTIONAL: Discuss the results in more detail as described in the "Stand Out Suggestions" part of the rubric).
 
@@ -184,29 +205,28 @@ Here are the results of the prediction:
 
 | Image			        |     Prediction	        					| 
 |:---------------------:|:---------------------------------------------:| 
-| Stop Sign      		| Stop sign   									| 
-| U-turn     			| U-turn 										|
-| Yield					| Yield											|
-| 100 km/h	      		| Bumpy Road					 				|
-| Slippery Road			| Slippery Road      							|
+| Go straight or right      		| Go straight or right   									| 
+| Right of way at the next intersection     			| Right of way at the next intersection 										|
+| Keep right					| Keep right											|
+| Slippery road	      		| Slippery road					 				|
+| Roundabout mandatory			| Roundabout mandatory      							|
 
 
-The model was able to correctly guess 4 of the 5 traffic signs, which gives an accuracy of 80%. This compares favorably to the accuracy on the test set of ...
+The model was able to correctly guess 5 of the 5 traffic signs, which gives an accuracy of 100%. This compares favorably to the accuracy on the test set of 95.04% which i got from the model.
+
+However for the challenging images, the model did not perform well at all. The results as below:
+
+| Image	 |  Prediction	 | 
+|:---------------------:|:---------------------------------------------:| 
+| Vehicles over 3.5 metric tons prohibited| No passing for vehicles over 3.5 metric tons| 
+| Road work | Wild animals crossing |
+| Speed limit (30km/h) | Speed limit (80km/h) |
 
 #### 3. Describe how certain the model is when predicting on each of the five new images by looking at the softmax probabilities for each prediction. Provide the top 5 softmax probabilities for each image along with the sign type of each probability. (OPTIONAL: as described in the "Stand Out Suggestions" part of the rubric, visualizations can also be provided such as bar charts)
 
-The code for making predictions on my final model is located in the 11th cell of the Ipython notebook.
-
-For the first image, the model is relatively sure that this is a stop sign (probability of 0.6), and the image does contain a stop sign. The top five soft max probabilities were
-
-| Probability         	|     Prediction	        					| 
-|:---------------------:|:---------------------------------------------:| 
-| .60         			| Stop sign   									| 
-| .20     				| U-turn 										|
-| .05					| Yield											|
-| .04	      			| Bumpy Road					 				|
-| .01				    | Slippery Road      							|
-
+A visulaization of the top 5 softmax probabilities of the predicted images is shown below:
+![alttext][testDataProbabilities]
+![alttext][testDataBars]
 
 For the second image ... 
 
